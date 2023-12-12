@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Games</title>
+</head>
+<body>
+    <a href = "ReadGameLeaderboard.html" >Click here to go to ReadGame LeaderBoard Page</a>
+        <h1> Read Games </h1>
+        <div id="quote"></div>
+
+        <br>
+        <br>
+
+        <button onclick="AdDGame()">ADD GAME</button>  
+
+        <script>
+             window.onload=goFetch;
+            function goFetch()
+            {
+                var quoteTag = document.getElementById('quote');
+                quoteTag.innerHTML = '';
+                var tableTag = '<table><tr> <th> Game Name </th> <th> platform </th> </tr>';
+                var index = 0;
+                fetch('https://lime-faithful-hippo.cyclic.app/api/games')
+                .then(function(response) 
+                {
+                    return response.json();
+                })
+                .then(function(data) 
+                {
+                    console.log(data);
+                    data.forEach((element) =>
+                    {
+                        tableTag += '<tr>' ;
+                        tableTag += `<td><a href="ReadGameLeaderboard.html?id=${element.id}">${element.GameName}</a></td>`;   
+                        tableTag += `<td>${element.Platform}</td>`; 
+                        tableTag += '</tr>';
+                        index++ ;
+                    });
+
+                    tableTag += '</table>' ;
+                    quoteTag.innerHTML += tableTag;
+                });
+            }
+            function AdDGame()
+            {
+            window.location.href = 'AddGame.html';
+            }
+        </script>
+</body>
+</html>

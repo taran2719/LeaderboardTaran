@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Game LeaderBoard</title>
+</head>
+<body>
+    <h3 style="text-align: center">Hollow Knight LeaderBoard</h3> 
+    <div id="taran"></div>
+
+    <script>
+        window.onload = goFetch;
+        function goFetch() {
+            let search = window.location.search;
+            let query = new URLSearchParams(search); 
+            console.log(query.get('id'));
+            let GameID = query.get('id');
+            var quoteTag = document.getElementById('taran');
+            quoteTag.innerHTML = '';
+            var tableTag = '<table> <tr> <th> Players </th> <th> Score </th> <th> Time </th> </tr>';
+            var index = 0;
+            fetch(`https://lime-faithful-hippo.cyclic.app/api/leaderBoard/` + GameID)
+                .then(function (response)
+                 {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data.Leaderboard);
+                    data.Leaderboard.forEach((element) => {
+                        tableTag += '<tr>';
+                        tableTag += `<td>${element.Player}</td>`;
+                        tableTag += `<td>${element.Score}</td>`;
+                        tableTag += `<td>${element.Time}</td>`;
+                        tableTag += '</tr>'; 
+                        index++;
+                    });
+
+                    tableTag += '</table>';
+                    quoteTag.innerHTML += tableTag;
+                });
+        }
+    </script>
+</body>
+</html>

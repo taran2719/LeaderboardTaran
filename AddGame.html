@@ -1,0 +1,68 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Game</title>
+    
+    <style>
+        body {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+         #IwanttextCenter {
+            text-align: center;
+        }
+    </style>
+ </head>
+ <body>
+    <div id="IwanttextCenter">
+        <a href = "ReadGame.html" >Click here to go to ReadGame Page</a><br>
+        <a href = "ReadGameLeaderboard.html" >Click here to go to ReadGame LeaderBoard Page</a>
+    <h1>Add Games</h1>
+    <div id="hahaha"></div>
+    <form>
+
+        <label for="Name">Game Name</label>
+        <input type="text" id="form" name="Name"><br><br><br>
+        <label for="Platform">Platform</label>
+        <input type="text" id="form2" name="console">
+
+    </form>
+    <br>
+    <br>
+    <button type="button" onclick="NewGame()">Submit</button> 
+    </div>  
+    <script>
+        function NewGame()
+        {
+            var games = 
+            {
+        
+           name :document.getElementById('form').value,
+           platform : document.getElementById('form2').value
+
+           }
+
+            fetch('https://lime-faithful-hippo.cyclic.app/api/games',
+            {
+                method :"Post",
+                body : JSON.stringify(games),
+                headers: {"Content-type" : "application/json; charset = UTF-8"}
+
+            })
+            .then(function(reply)
+            {
+               return reply.json(); 
+            })
+            .then(function(answer)
+            {
+               console.log(answer); 
+            })
+        }
+    </script>
+ </body>
+ </html>
